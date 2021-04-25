@@ -1,3 +1,4 @@
+// © Copyright 2021 Ollivier Roberge
 #ifndef ENDIAN_HELPER_IMPL
 #define ENDIAN_HELPER_IMPL
 
@@ -79,51 +80,51 @@ namespace { // builtin aliases...
 #if __has_builtin(__builtin_bswap128)
 #endif
 }
-//namespace Aulit {
-namespace endian {
-	[[nodiscard]] constexpr auto swap_endian(const auto& data) noexcept {
-		if constexpr (sizeof(data) == 1)
-			return data;
-		else if constexpr (sizeof(data) == 2)
-			return bitSwap16(std::bit_cast<std::uint16_t>(data)); // avoid UB
-		else if constexpr (sizeof(data) == 4)
-			return bitSwap32(std::bit_cast<std::uint32_t>(data));
-		else if constexpr (sizeof(data) == 8)
-			return bitSwap64(std::bit_cast<std::uint64_t>(data));
-		else {
-			auto p = static_cast<std::byte*>(&data);
-			for (std::size_t lo = 0, hi = sizeof(data) - 1;
-				hi > lo;
-				++lo, --hi) {
-				std::swap(p[lo], p[hi]);
+namespace Aulit {
+	namespace endian {
+		[[nodiscard]] constexpr auto swap_endian(const auto& data) noexcept {
+			if constexpr (sizeof(data) == 1)
+				return data;
+			else if constexpr (sizeof(data) == 2)
+				return bitSwap16(std::bit_cast<std::uint16_t>(data)); // avoid UB
+			else if constexpr (sizeof(data) == 4)
+				return bitSwap32(std::bit_cast<std::uint32_t>(data));
+			else if constexpr (sizeof(data) == 8)
+				return bitSwap64(std::bit_cast<std::uint64_t>(data));
+			else {
+				auto p = static_cast<std::byte*>(&data);
+				for (std::size_t lo = 0, hi = sizeof(data) - 1;
+					hi > lo;
+					++lo, --hi) {
+					std::swap(p[lo], p[hi]);
+				}
+				return std::bit_cast<decltype(data)>(p);
 			}
-			return std::bit_cast<decltype(data)>(p);
+		}
+
+		[[nodiscard]] constexpr auto native_to_little(auto data) noexcept {
+			if constexpr (std::endian::native == std::endian::big)
+				return swap_endian(data);
+			else return data;
+		}
+
+		[[nodiscard]] constexpr auto native_to_big(auto data) noexcept {
+			if constexpr (std::endian::native == std::endian::little)
+				return swap_endian(data);
+			else return data;
+		}
+
+		[[nodiscard]] constexpr auto big_to_native(auto data) noexcept {
+			if constexpr (std::endian::native == std::endian::little)
+				return swap_endian(data);
+			else return data;
+		}
+
+		[[nodiscard]] constexpr auto little_to_native(auto data) noexcept {
+			if constexpr (std::endian::native == std::endian::big)
+				return swap_endian(data);
+			else return data;
 		}
 	}
-
-	[[nodiscard]] constexpr auto native_to_little(auto data) noexcept {
-		if constexpr (std::endian::native == std::endian::big)
-			return swap_endian(data);
-		else return data;
-	}
-
-	[[nodiscard]] constexpr auto native_to_big(auto data) noexcept {
-		if constexpr (std::endian::native == std::endian::little)
-			return swap_endian(data);
-		else return data;
-	}
-
-	[[nodiscard]] constexpr auto big_to_native(auto data) noexcept {
-		if constexpr (std::endian::native == std::endian::little)
-			return swap_endian(data);
-		else return data;
-	}
-
-	[[nodiscard]] constexpr auto little_to_native(auto data) noexcept {
-		if constexpr (std::endian::native == std::endian::big)
-			return swap_endian(data);
-		else return data;
-	}
 }
-//}
 #endif // !ENDIAN_HELPER_IMPL

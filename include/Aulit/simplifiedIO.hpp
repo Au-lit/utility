@@ -1,4 +1,4 @@
-// Note: this is less powerful than a normal write or read because op overload will not work.
+// © Copyright 2020 Ollivier Roberge
 #include <ostream>
 #include <istream>
 #include <version>
