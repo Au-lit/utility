@@ -86,11 +86,14 @@ namespace Aulit {
 			if constexpr (sizeof(data) == 1)
 				return data;
 			else if constexpr (sizeof(data) == 2)
-				return bitSwap16(std::bit_cast<std::uint16_t>(data)); // avoid UB
+				return std::bit_cast<decltype(data)>(
+					bitSwap16(std::bit_cast<std::uint16_t>(data))); // avoid UB
 			else if constexpr (sizeof(data) == 4)
-				return bitSwap32(std::bit_cast<std::uint32_t>(data));
+				return std::bit_cast<decltype(data)>(
+					bitSwap32(std::bit_cast<std::uint32_t>(data)));
 			else if constexpr (sizeof(data) == 8)
-				return bitSwap64(std::bit_cast<std::uint64_t>(data));
+				return std::bit_cast<decltype(data)>(
+					bitSwap64(std::bit_cast<std::uint64_t>(data)));
 			else {
 				auto p = static_cast<std::byte*>(&data);
 				for (std::size_t lo = 0, hi = sizeof(data) - 1;
