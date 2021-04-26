@@ -4,7 +4,7 @@ Files | C++ standard required | Description
 ------------ | ------------- | -------------
 random_value.hpp | C++11 | A simple function for random values.
 is_char.hpp | C++11 | A type trait to find if a type is a character type.
-scope.hpp | C++17 (might be ported to 11) | `scope_exit` class, etc.
+scope.hpp | C++17 | `scope_exit` class, etc.
 endian.hpp | C++20 | A small library to handle endianness.
 
 ## FAQ
