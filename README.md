@@ -9,7 +9,7 @@ endian.hpp | Aulit::endian | C++20 | A small library to handle endianness.
 
 # FAQ
 #### Where is the documetation? I don't see it in the code...
-See this repo wiki. (I dislike putting all the ducumentation in one single file).
+See this repo [wiki](https://github.com/Au-lit/utility-functions/wiki). (I dislike putting all the documentation in one single file).
 #### Why not C?
 Because [stb](https://github.com/nothings/stb) already exists for C. (and because it's not my language. And C++ is clearer.)
 #### Why is this not public domain?
