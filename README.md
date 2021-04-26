@@ -1,10 +1,10 @@
 # Au-lit/utility-functions
 A collection of fast C++ utility functions / small libs all in single header files with no code implications.
 Files | Inside namespace | C++ standard required | Description
------------- | ------------- | ------------- | -------------
+------------ | -------- | ------------- | -------------
 random_value.hpp | Aulit | C++11 | A simple function for random values.
 is_char.hpp | Aulit | C++11 | A type trait to find if a type is a character type.
-scope.hpp | Aulit (inline namespace standard::experimental) | C++11 | `scope_exit` class, etc.
+scope.hpp | Aulit (inline namespace standard::experimental) | C++17 (might be ported to 11) | `scope_exit` class, etc.
 endian.hpp | Aulit::endian | C++20 | A small library to handle endianness.
 
 # FAQ
