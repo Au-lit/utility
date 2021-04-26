@@ -1,4 +1,4 @@
-// © Copyright 2021 Ollivier Roberge
+// Â© Copyright 2021 Ollivier Roberge
 #ifndef ENDIAN_HELPER_IMPL
 #define ENDIAN_HELPER_IMPL
 
@@ -28,9 +28,9 @@ namespace { // builtin aliases...
 	[[nodiscard]] constexpr std::uint32_t bitSwap32(std::uint32_t value) noexcept {
 		if (std::is_constant_evaluated())
 			return ((((value) & 0xff000000) >> 24) |
-				(((value) & 0x00ff0000) >> 8) |
-				(((value) & 0x0000ff00) << 8) |
-				(((value) & 0x000000ff) << 24));
+					(((value) & 0x00ff0000) >> 8) |
+					(((value) & 0x0000ff00) << 8) |
+					(((value) & 0x000000ff) << 24));
 		else {
 #if __has_builtin(__builtin_bswap32)
 			return __builtin_bswap32(value);
@@ -38,9 +38,9 @@ namespace { // builtin aliases...
 			return _byteswap_ulong(value);
 #else
 			return ((((value) & 0xff000000) >> 24) |
-				(((value) & 0x00ff0000) >> 8) |
-				(((value) & 0x0000ff00) << 8) |
-				(((value) & 0x000000ff) << 24));
+					(((value) & 0x00ff0000) >> 8) |
+					(((value) & 0x0000ff00) << 8) |
+					(((value) & 0x000000ff) << 24));
 #endif
 		}
 
@@ -48,23 +48,21 @@ namespace { // builtin aliases...
 
 	[[nodiscard]] constexpr std::uint64_t bitSwap64(std::uint64_t value) noexcept {
 		if (std::is_constant_evaluated())
-			return
-			((((value) & 0xff00000000000000ull) >> 56) |
-				(((value) & 0x00ff000000000000ull) >> 40) |
-				(((value) & 0x0000ff0000000000ull) >> 24) |
-				(((value) & 0x000000ff00000000ull) >> 8) |
-				(((value) & 0x00000000ff000000ull) << 8) |
-				(((value) & 0x0000000000ff0000ull) << 24) |
-				(((value) & 0x000000000000ff00ull) << 40) |
-				(((value) & 0x00000000000000ffull) << 56));
+			return ((((value) & 0xff00000000000000ull) >> 56) |
+					(((value) & 0x00ff000000000000ull) >> 40) |
+					(((value) & 0x0000ff0000000000ull) >> 24) |
+					(((value) & 0x000000ff00000000ull) >> 8) |
+					(((value) & 0x00000000ff000000ull) << 8) |
+					(((value) & 0x0000000000ff0000ull) << 24) |
+					(((value) & 0x000000000000ff00ull) << 40) |
+					(((value) & 0x00000000000000ffull) << 56));
 		else {
 #if __has_builtin(__builtin_bswap64)
 			return __builtin_bswap64(value);
 #elif _MSC_VER && !__INTEL_COMPILER
 			return _byteswap_uint64(value);
 #else
-			return
-				((((value) & 0xff00000000000000ull) >> 56) |
+			return ((((value) & 0xff00000000000000ull) >> 56) |
 					(((value) & 0x00ff000000000000ull) >> 40) |
 					(((value) & 0x0000ff0000000000ull) >> 24) |
 					(((value) & 0x000000ff00000000ull) >> 8) |
