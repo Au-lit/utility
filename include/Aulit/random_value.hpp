@@ -8,7 +8,8 @@
 #include <cstddef>
 
 namespace Aulit {
-	enum eReseedEngine {};
+	// yes this enum is not denoted with eTheName; Sue me for that if you want.
+	enum reseed_engine : unsigned int {};
 	template<typename ResultType>
 	// VV when reseeding it's way too annoying...
 //#if __has_cpp_attribute(nodiscard) >= 201603L
@@ -20,7 +21,7 @@ namespace Aulit {
 	) noexcept {
 		thread_local std::random_device rd;
 		thread_local std::default_random_engine random_engine(rd());
-		if constexpr (std::is_same<ResultType, eReseedEngine>::value) {
+		if constexpr (std::is_same<ResultType, reseed_engine>::value) {
 			const auto seed = rd();
 			random_engine.seed(seed);
 			return static_cast<ResultType>(seed);
