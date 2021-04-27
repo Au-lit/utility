@@ -8,8 +8,18 @@
 #include <cstddef>
 
 namespace Aulit {
-	// yes this enum is not denoted with eTheName; Sue me for that if you want.
+	// Yes, this enum is not denoted with eTheName; Sue me for that if you want.
 	enum reseed_engine : unsigned int {};
+
+	/// \breif Returns a random value in the interval [a, b].
+	/// <typeparam name="ResultType">
+	/// If this is Aulit::reseed_engine :
+	/// 1. The function will reseed the internal random engine.
+	/// 2. The function will return the seed used.
+	/// </typeparam>
+	/// \param a The lowest value possibly returned.
+	/// \param b The highest value possibly returned.
+	/// \return A random value in the interval [a, b].
 	template<typename ResultType>
 	// VV when reseeding it's way too annoying...
 //#if __has_cpp_attribute(nodiscard) >= 201603L
