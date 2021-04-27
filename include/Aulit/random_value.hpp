@@ -10,9 +10,10 @@
 namespace Aulit {
 	enum eReseedEngine {};
 	template<typename ResultType>
-#if __has_cpp_attribute(nodiscard) >= 201603L
-	[[nodiscard]]
-#endif
+	// VV when reseeding it's way too annoying...
+//#if __has_cpp_attribute(nodiscard) >= 201603L
+	//[[nodiscard]]
+//#endif
 	ResultType uniform_random_value(
 		ResultType a = static_cast<ResultType>(0),
 		ResultType b = static_cast<ResultType>(std::numeric_limits<ResultType>::max())
