@@ -1,4 +1,5 @@
 // © Copyright 2021 Ollivier Roberge
+// For the documentation see : https://github.com/Au-lit/utility-functions/wiki/endian.hpp
 #ifndef ENDIAN_HELPER_IMPL
 #define ENDIAN_HELPER_IMPL
 
