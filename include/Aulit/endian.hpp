@@ -87,7 +87,7 @@ namespace { // builtin aliases...
 namespace Aulit {
 	//constexpr const auto endian_hpp_version = "1.1.0";
 	namespace endian {
-		[[nodiscard]] constexpr auto swap_endian(const auto& data) noexcept {
+		[[nodiscard]] constexpr auto swap_endian(auto data) noexcept {
 			if constexpr (sizeof(data) == 1)
 				return data;
 			else if constexpr (sizeof(data) == 2)
