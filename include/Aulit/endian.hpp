@@ -107,6 +107,20 @@ namespace Aulit {
 			}
 		}
 
+		constexpr void swap_endian_inplace(auto& data) noexcept {
+			if constexpr (sizeof(data) == 2)
+				data = std::bit_cast<decltype(data)>(bitSwap16(std::bit_cast<std::uint16_t>(data)));
+			else if constexpr (sizeof(data) == 4)
+				data = std::bit_cast<decltype(data)>(bitSwap32(std::bit_cast<std::uint32_t>(data)));
+			else if constexpr (sizeof(data) == 8)
+				data = std::bit_cast<decltype(data)>(bitSwap64(std::bit_cast<std::uint64_t>(data)));
+			else {
+				auto start = static_cast<std::byte*>(&data);
+				auto dst = start + sizeof(data);
+				for (dst--; dst > start; start++, dst--) std::iter_swap(dst, start);
+			}
+		}
+
 		[[nodiscard]] constexpr auto native_to_little(auto data) noexcept {
 			if constexpr (std::endian::native == std::endian::big)
 				return swap_endian(data);
@@ -130,6 +144,27 @@ namespace Aulit {
 				return swap_endian(data);
 			else return data;
 		}
+
+		[[nodiscard]] constexpr void native_to_little_inplace(auto& data) noexcept {
+			if constexpr (std::endian::native == std::endian::big)
+				swap_endian_inplace(data);
+		}
+
+		[[nodiscard]] constexpr void native_to_big_inplace(auto& data) noexcept {
+			if constexpr (std::endian::native == std::endian::little)
+				swap_endian_inplace(data);
+		}
+
+		[[nodiscard]] constexpr void big_to_native_inplace(auto& data) noexcept {
+			if constexpr (std::endian::native == std::endian::little)
+				swap_endian_inplace(data);
+		}
+
+		[[nodiscard]] constexpr void little_to_native_inplace(auto& data) noexcept {
+			if constexpr (std::endian::native == std::endian::big)
+				swap_endian_inplace(data);
+		}
 	}
 }
+
 #endif // !ENDIAN_HELPER_IMPL
