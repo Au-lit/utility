@@ -84,6 +84,7 @@ namespace { // builtin aliases...
 	#endif
 	#pragma warning(pop) // 4067
 }
+
 namespace Aulit {
 	//constexpr const auto endian_hpp_version = "1.1.0";
 	namespace endian {
@@ -106,21 +107,7 @@ namespace Aulit {
 				return data;
 			}
 		}
-
-		constexpr void swap_endian_inplace(auto& data) noexcept {
-			if constexpr (sizeof(data) == 2)
-				data = std::bit_cast<decltype(data)>(bitSwap16(std::bit_cast<std::uint16_t>(data)));
-			else if constexpr (sizeof(data) == 4)
-				data = std::bit_cast<decltype(data)>(bitSwap32(std::bit_cast<std::uint32_t>(data)));
-			else if constexpr (sizeof(data) == 8)
-				data = std::bit_cast<decltype(data)>(bitSwap64(std::bit_cast<std::uint64_t>(data)));
-			else {
-				auto start = static_cast<std::byte*>(&data);
-				auto dst = start + sizeof(data);
-				for (dst--; dst > start; start++, dst--) std::iter_swap(dst, start);
-			}
-		}
-
+		
 		[[nodiscard]] constexpr auto native_to_little(auto data) noexcept {
 			if constexpr (std::endian::native == std::endian::big)
 				return swap_endian(data);
@@ -143,6 +130,20 @@ namespace Aulit {
 			if constexpr (std::endian::native == std::endian::big)
 				return swap_endian(data);
 			else return data;
+		}
+
+		constexpr void swap_endian_inplace(auto& data) noexcept {
+			if constexpr (sizeof(data) == 2)
+				data = std::bit_cast<decltype(data)>(bitSwap16(std::bit_cast<std::uint16_t>(data)));
+			else if constexpr (sizeof(data) == 4)
+				data = std::bit_cast<decltype(data)>(bitSwap32(std::bit_cast<std::uint32_t>(data)));
+			else if constexpr (sizeof(data) == 8)
+				data = std::bit_cast<decltype(data)>(bitSwap64(std::bit_cast<std::uint64_t>(data)));
+			else {
+				auto start = static_cast<std::byte*>(&data);
+				auto dst = start + sizeof(data);
+				for (dst--; dst > start; start++, dst--) std::iter_swap(dst, start);
+			}
 		}
 
 		[[nodiscard]] constexpr void native_to_little_inplace(auto& data) noexcept {

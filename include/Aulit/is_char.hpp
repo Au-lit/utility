@@ -17,7 +17,7 @@ namespace Aulit {
 	#if __cpp_inline_variables >= 201606L
 		template<typename T> inline constexpr bool is_char_v = is_char<T>::value;
 	#endif
-	#if __cpp_concepts >= 201907L
+	#if __cpp_concepts >= 201811L // for msvc to not break, otherwise 201907L
 		template<typename T> concept character = is_char<T>::value;
 	#endif 
 }
