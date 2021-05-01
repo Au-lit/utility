@@ -10,26 +10,22 @@
 
 namespace Aulit {
 	// Yes, this enum is not denoted with eTheName; Sue me for that if you want.
-	enum reseed_engine : unsigned int {};
+	enum reseed_engine : std::random_device::result_type {};
 
 	/// \param a The lowest value possibly returned.
 	/// \param b The highest value possibly returned.
 	/// \return A random value in the interval [a, b].
 	template<typename ResultType>
-	// VV when reseeding it's way too annoying...
-//#if __has_cpp_attribute(nodiscard) >= 201603L
-	//[[nodiscard]]
-//#endif
 	ResultType uniform_random_value(
-		ResultType a = static_cast<ResultType>(0),
-		ResultType b = static_cast<ResultType>(std::numeric_limits<ResultType>::max())
+		ResultType a = std::numeric_limits<ResultType>::lowest(), // maybe ::min() is more appropriate...
+		ResultType b = std::numeric_limits<ResultType>::max()
 	) noexcept {
 		thread_local std::random_device rd;
 		thread_local std::default_random_engine random_engine(rd());
 		if constexpr (std::is_same<ResultType, reseed_engine>::value) {
 			const auto seed = rd();
 			random_engine.seed(seed);
-			return static_cast<ResultType>(seed);
+			return static_cast<ResultType>(seed); // no asm
 		}
 		else {
 			if constexpr (std::is_floating_point<ResultType>::value)

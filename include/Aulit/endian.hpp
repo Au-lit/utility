@@ -7,6 +7,7 @@
 #include <utility>
 #include <cstddef> // std::byte
 #include <type_traits> // std::is_constant_evaluated
+#include <algorithm> // std::iter_swap
 
 #if _MSC_VER && !__INTEL_COMPILER
 	#include <intrin.h>
@@ -99,16 +100,10 @@ namespace Aulit {
 				return std::bit_cast<decltype(data)>(
 					bitSwap64(std::bit_cast<std::uint64_t>(data)));
 			else {
-				auto ptr = static_cast<std::byte*>(&data);
-				for (std::size_t left = 0, right = sizeof(data) - 1;
-					right > left;
-					++left, --right) {
-					// std::swap but inlined...
-					const auto tmp = std::move_if_noexcept(ptr[left]);
-					ptr[left] = std::move_if_noexcept(ptr[right]);
-					ptr[right] = std::move_if_noexcept(tmp);
-				}
-				return std::bit_cast<decltype(data)>(ptr);
+				auto start = static_cast<std::byte*>(&data);
+				auto dst = start + sizeof(data);
+				for (dst--; dst > start; start++, dst--) std::iter_swap(dst, start);
+				return data;
 			}
 		}
 
