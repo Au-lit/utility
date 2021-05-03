@@ -1,5 +1,5 @@
-# Au-lit/utility-functions
-A collection of fast C++ utility functions / small libs all in single header files with no "code implications".
+# Au-lit/utility
+A collection of fast-ish C++ utility functions / small libs all in single header files with no "code implications".
 Files | C++ standard required | Description
 ------------ | ------------- | -------------
 random_value.hpp | C++11 | A simple function for random values.
