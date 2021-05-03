@@ -1,5 +1,6 @@
 // © Copyright 2021 Ollivier Roberge
 // For the documentation see https://github.com/Au-lit/utility-functions/wiki/random_value.hpp
+// For the license see https://github.com/Au-lit/utility-functions/blob/master/LICENSE
 #ifndef RANDOM_VALUE_IMPL
 #define RANDOM_VALUE_IMPL
 

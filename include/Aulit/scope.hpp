@@ -1,4 +1,5 @@
 // © Copyright 2021 Ollivier Roberge
+// For the license see https://github.com/Au-lit/utility-functions/blob/master/LICENSE
 #ifndef SCOPE_EXIT_IMPL
 #define SCOPE_EXIT_IMPL
 

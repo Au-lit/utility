@@ -1,5 +1,6 @@
 // © Copyright 2021 Ollivier Roberge
 // For the documentation see https://github.com/Au-lit/utility-functions/wiki/is_char.hpp
+// For the license see https://github.com/Au-lit/utility-functions/blob/master/LICENSE
 #ifndef IS_CHAR_IMPL
 #define IS_CHAR_IMPL
 
