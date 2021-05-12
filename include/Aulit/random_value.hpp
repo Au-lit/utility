@@ -7,8 +7,8 @@
 #include <limits>
 #include <random>
 #include <type_traits>
-#include <cstddef>
-
+#undef min
+#undef max // weird that I have to do that
 namespace Aulit {
 	// Yes, this enum is not denoted with eTheName; Sue me for that if you want.
 	enum reseed_engine : std::random_device::result_type {};

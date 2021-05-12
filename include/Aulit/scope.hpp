@@ -18,11 +18,12 @@ namespace Aulit {
 				template<typename Fn>
 				constexpr scope_exit(Fn&& function) noexcept(std::is_nothrow_constructible_v<Fn>)
 					: m_function(std::forward<Fn>(function)) {}
-				constexpr scope_exit(scope_exit&& other) noexcept = default;
+				constexpr scope_exit(scope_exit&& other) noexcept 
+					: m_function(other.m_function), m_canExit(other.m_canExit) { other.release(); }
 				scope_exit(const scope_exit& other) = delete;
 				scope_exit& operator=(scope_exit&&) = default; // this is not standard but useful
 				scope_exit& operator=(const scope_exit&) = delete;
-				constexpr ~scope_exit() noexcept { if (m_canExit) std::invoke(m_function); }
+				/*constexpr*/ ~scope_exit() noexcept { if (m_canExit) std::invoke(m_function); }
 				constexpr void release() noexcept { m_canExit = false; }
 			private:
 				Ef m_function;
@@ -35,11 +36,12 @@ namespace Aulit {
 				template<typename Fn>
 				constexpr scope_fail(Fn&& function) noexcept(std::is_nothrow_constructible_v<Fn>)
 					: m_function(std::forward<Fn>(function)) {}
-				constexpr scope_fail(scope_fail&& other) noexcept = default;
+				constexpr scope_fail(scope_fail&& other) noexcept 
+					: m_function(other.m_function), m_canExit(other.m_canExit) { other.release(); }
 				scope_fail(const scope_fail& other) = delete;
 				scope_fail& operator=(scope_fail&&) = default;
 				scope_fail& operator=(const scope_fail&) = delete;
-				constexpr ~scope_fail() noexcept { if (m_canExit && std::uncaught_exceptions() > 0) std::invoke(m_function); }
+				/*constexpr*/ ~scope_fail() noexcept { if (m_canExit && std::uncaught_exceptions() > 0) std::invoke(m_function); }
 				constexpr void release() noexcept { m_canExit = false; }
 			private:
 				Ef m_function;
@@ -52,11 +54,12 @@ namespace Aulit {
 				template<typename Fn>
 				constexpr scope_success(Fn&& function) noexcept(std::is_nothrow_constructible_v<Fn>)
 					: m_function(std::forward<Fn>(function)) {}
-				constexpr scope_success(scope_success&& other) noexcept = default;
+				constexpr scope_success(scope_success&& other) noexcept 
+					: m_function(other.m_function), m_canExit(other.m_canExit) { other.release(); }
 				scope_success(const scope_success& other) = delete;
 				scope_success& operator=(scope_success&&) = default;
 				scope_success& operator=(const scope_success&) = delete;
-				constexpr ~scope_success() noexcept { if (m_canExit && std::uncaught_exceptions() < 1) std::invoke(m_function); }
+				/*constexpr*/ ~scope_success() noexcept { if (m_canExit && std::uncaught_exceptions() < 1) std::invoke(m_function); }
 				constexpr void release() noexcept { m_canExit = false; }
 			private:
 				Ef m_function;

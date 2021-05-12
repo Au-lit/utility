@@ -153,7 +153,7 @@ namespace Aulit::endian {
 		else if constexpr (sizeof(data) == 8)
 			return std::bit_cast<decltype(data)>(
 				bitSwap64(std::bit_cast<std::uint64_t>(data)));
-		else {
+		else { // ???
 			auto start = static_cast<std::byte*>(&data);
 			auto dst = start + sizeof(data);
 			for (dst--; dst > start; start++, dst--) std::iter_swap(dst, start);
